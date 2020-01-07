@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: build/server/Dockerfile
+      target: build
+    volumes:
+      - ./:/go/app
+    command: realize start --run
+    ports:
+      - 9998:9998
+      - 23450:23450
+    security_opt:
+      - apparmor:unconfined
+    cap_add:
+      - SYS_PTRACE
