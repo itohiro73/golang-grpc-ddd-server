@@ -8,13 +8,13 @@ schema:
     commands:
       install:
         status: true
-        method: go build ./cmd/server/
+        method: go build -o grpc-server ./cmd/server/
       run:
         status: true
         method: /go/bin/dlv
     args:
       - exec
-      - ./server
+      - ./grpc-server
       - --headless=true
       - --listen=:23450
       - --api-version=2

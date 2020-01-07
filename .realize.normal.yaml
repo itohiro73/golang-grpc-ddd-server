@@ -8,10 +8,10 @@ schema:
     commands:
       install:
         status: true
-        method: go build ./cmd/server/
+        method: go build -o grpc-server ./cmd/server/
       run:
         status: true
-        method: ./server
+        method: ./grpc-server
     watcher:
       extensions:
         - go

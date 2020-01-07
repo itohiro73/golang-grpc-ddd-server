@@ -15,7 +15,7 @@
 .realize.yaml
 
 # output go build
-server
+grpc-server
 
 # IDEA Setting Files
 .idea
