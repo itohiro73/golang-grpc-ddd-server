@@ -10,3 +10,15 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# realize Setting Files
+.realize.yaml
+.realize.server.yaml
+.realize.client.yaml
+
+# output go build
+grpc-server
+grpc-client
+
+# IDEA Setting Files
+.idea

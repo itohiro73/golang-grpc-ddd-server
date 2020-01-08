@@ -1,0 +1,31 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+  - name: client
+    path: .
+    commands:
+      install:
+        status: true
+        method: go build -o grpc-client ./cmd/client/
+      run:
+        status: true
+        method: /go/bin/dlv
+    args:
+      - exec
+      - ./grpc-client
+      - --headless=true
+      - --listen=:23451
+      - --api-version=2
+      - --accept-multiclient
+    watcher:
+      extensions:
+        - go
+      paths:
+        - /
+      ignore:
+        paths:
+          - .git
+          - .realize
+          - vendor
