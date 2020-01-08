@@ -17,6 +17,8 @@
 # vendor/
 
 .idea
+.git
+.gitignore
 .realize.yaml
 LICENSE
 README.md
