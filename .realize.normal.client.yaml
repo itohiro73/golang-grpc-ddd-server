@@ -1,0 +1,24 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+schema:
+  - name: client
+    path: .
+    commands:
+      install:
+        status: true
+        method: go build -o grpc-client ./cmd/client/
+      run:
+        status: true
+        method: ./grpc-client
+    watcher:
+      extensions:
+        - go
+      paths:
+        - /
+      ignore:
+        paths:
+          - .git
+          - .realize
+          - vendor

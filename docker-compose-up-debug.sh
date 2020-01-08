@@ -1,5 +1,6 @@
 #!/bin/sh
 
-cp .realize.debug.yaml .realize.yaml
+cp .realize.debug.server.yaml .realize.server.yaml
+cp .realize.debug.client.yaml .realize.client.yaml
 
 docker-compose up --build -d
