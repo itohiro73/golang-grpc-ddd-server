@@ -3,18 +3,18 @@ settings:
     force: false
     interval: 0s
 schema:
-  - name: server
+  - name: app
     path: .
     commands:
       install:
         status: true
-        method: go build -o grpc-server ./cmd/server/
+        method: go build -o golang-grpc-server
       run:
         status: true
         method: /go/bin/dlv
     args:
       - exec
-      - ./grpc-server
+      - ./golang-grpc-server
       - --headless=true
       - --listen=:23450
       - --api-version=2

@@ -1,3 +1,3 @@
-module github.com/keitakn/golang-grpc
+module github.com/keitakn/golang-grpc-server
 
 go 1.13

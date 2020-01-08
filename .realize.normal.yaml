@@ -3,22 +3,15 @@ settings:
     force: false
     interval: 0s
 schema:
-  - name: client
+  - name: app
     path: .
     commands:
       install:
         status: true
-        method: go build -o grpc-client ./cmd/client/
+        method: go build -o golang-grpc-server
       run:
         status: true
-        method: /go/bin/dlv
-    args:
-      - exec
-      - ./grpc-client
-      - --headless=true
-      - --listen=:23451
-      - --api-version=2
-      - --accept-multiclient
+        method: ./golang-grpc-server
     watcher:
       extensions:
         - go
