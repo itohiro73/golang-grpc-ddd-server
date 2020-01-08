@@ -1,14 +1,13 @@
 version: '3.7'
 
 services:
-  server:
+  grpc-server:
     build:
       context: .
-      dockerfile: build/server/Dockerfile
+      dockerfile: Dockerfile
       target: build
     volumes:
       - ./:/go/app
-#      - exclude:/go/app/.realize.yaml
     command: realize start --run
     ports:
       - 9998:9998
@@ -17,22 +16,8 @@ services:
       - apparmor:unconfined
     cap_add:
       - SYS_PTRACE
-  client:
-    build:
-      context: .
-      dockerfile: build/client/Dockerfile
-      target: build
-    volumes:
-      - ./:/go/app
-#      - exclude:/go/app/.realize.yaml
-    command: realize start --run
-    ports:
-      - 9999:9999
-      - 23451:23451
-    security_opt:
-      - apparmor:unconfined
-    cap_add:
-      - SYS_PTRACE
-volumes:
-  exclude:
-    driver: 'local'
+    networks:
+      - grpc-training
+networks:
+  grpc-training:
+    name: grpc-training
