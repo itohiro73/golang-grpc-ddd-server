@@ -22,6 +22,6 @@ COPY --from=build /go/app/golang-grpc-server .
 RUN set -x && \
   addgroup go && \
   adduser -D -G go go && \
-  chown -R go:go /app/grpc-server
+  chown -R go:go /app/golang-grpc-server
 
 CMD ["./golang-grpc-server"]
