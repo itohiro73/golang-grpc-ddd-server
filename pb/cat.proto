@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service Cat {
+    rpc FindMyCat (FindCuteCatMessage) returns (CuteCatResponse) {}
+}
+
+message FindCuteCatMessage {
+    string catId = 1;
+}
+
+message CuteCatResponse {
+    string name = 1;
+    string kind = 2;
+}
