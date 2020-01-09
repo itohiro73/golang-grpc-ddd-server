@@ -8,7 +8,7 @@ import (
 
 type CatService struct{}
 
-func (s *CatService) FindMyCat(ctx context.Context, message *pb.FindCuteCatMessage) (*pb.CuteCatResponse, error) {
+func (s *CatService) FindCuteCat(ctx context.Context, message *pb.FindCuteCatMessage) (*pb.CuteCatResponse, error) {
 	switch message.CatId {
 	case "moko":
 		// もこはチンチラシルバー

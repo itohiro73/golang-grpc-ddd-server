@@ -118,17 +118,17 @@ func init() {
 func init() { proto.RegisterFile("pb/cat.proto", fileDescriptor_373801c440db0e38) }
 
 var fileDescriptor_373801c440db0e38 = []byte{
-	// 149 bytes of a gzipped FileDescriptorProto
+	// 146 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x29, 0x48, 0xd2, 0x4f,
 	0x4e, 0x2c, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x57, 0xd2, 0xe2, 0x12, 0x72, 0xcb, 0xcc, 0x4b,
 	0x71, 0x2e, 0x2d, 0x49, 0x75, 0x4e, 0x2c, 0xf1, 0x4d, 0x2d, 0x2e, 0x4e, 0x4c, 0x4f, 0x15, 0x12,
 	0xe1, 0x62, 0x4d, 0x4e, 0x2c, 0xf1, 0x4c, 0x91, 0x60, 0x54, 0x60, 0xd4, 0xe0, 0x0c, 0x82, 0x70,
 	0x94, 0x2c, 0xb9, 0xf8, 0xa1, 0xea, 0x82, 0x52, 0x8b, 0x0b, 0xf2, 0xf3, 0x8a, 0x53, 0x85, 0x84,
 	0xb8, 0x58, 0xf2, 0x12, 0x73, 0x53, 0xa1, 0xea, 0xc0, 0x6c, 0x90, 0x58, 0x76, 0x66, 0x5e, 0x8a,
-	0x04, 0x13, 0x44, 0x0c, 0xc4, 0x36, 0xb2, 0xe6, 0x62, 0x76, 0x4e, 0x2c, 0x11, 0x32, 0xe1, 0xe2,
-	0x04, 0xd9, 0xe6, 0x5b, 0x09, 0xe2, 0x08, 0xeb, 0x61, 0xda, 0x2c, 0x25, 0xa0, 0x87, 0x66, 0x85,
-	0x12, 0x43, 0x12, 0x1b, 0xd8, 0xa9, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa3, 0xde, 0xe2,
-	0xd9, 0xba, 0x00, 0x00, 0x00,
+	0x04, 0x13, 0x44, 0x0c, 0xc4, 0x36, 0xb2, 0xe5, 0x62, 0x76, 0x4e, 0x2c, 0x11, 0x32, 0xe3, 0xe2,
+	0x46, 0xb2, 0x4d, 0x48, 0x58, 0x0f, 0xd3, 0x6e, 0x29, 0x01, 0x3d, 0x34, 0x4b, 0x94, 0x18, 0x92,
+	0xd8, 0xc0, 0x8e, 0x35, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0xc5, 0x46, 0xb1, 0xe0, 0xbc, 0x00,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -143,7 +143,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CatClient interface {
-	FindMyCat(ctx context.Context, in *FindCuteCatMessage, opts ...grpc.CallOption) (*CuteCatResponse, error)
+	FindCuteCat(ctx context.Context, in *FindCuteCatMessage, opts ...grpc.CallOption) (*CuteCatResponse, error)
 }
 
 type catClient struct {
@@ -154,9 +154,9 @@ func NewCatClient(cc *grpc.ClientConn) CatClient {
 	return &catClient{cc}
 }
 
-func (c *catClient) FindMyCat(ctx context.Context, in *FindCuteCatMessage, opts ...grpc.CallOption) (*CuteCatResponse, error) {
+func (c *catClient) FindCuteCat(ctx context.Context, in *FindCuteCatMessage, opts ...grpc.CallOption) (*CuteCatResponse, error) {
 	out := new(CuteCatResponse)
-	err := c.cc.Invoke(ctx, "/Cat/FindMyCat", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/Cat/FindCuteCat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -165,35 +165,35 @@ func (c *catClient) FindMyCat(ctx context.Context, in *FindCuteCatMessage, opts 
 
 // CatServer is the server API for Cat service.
 type CatServer interface {
-	FindMyCat(context.Context, *FindCuteCatMessage) (*CuteCatResponse, error)
+	FindCuteCat(context.Context, *FindCuteCatMessage) (*CuteCatResponse, error)
 }
 
 // UnimplementedCatServer can be embedded to have forward compatible implementations.
 type UnimplementedCatServer struct {
 }
 
-func (*UnimplementedCatServer) FindMyCat(ctx context.Context, req *FindCuteCatMessage) (*CuteCatResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindMyCat not implemented")
+func (*UnimplementedCatServer) FindCuteCat(ctx context.Context, req *FindCuteCatMessage) (*CuteCatResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindCuteCat not implemented")
 }
 
 func RegisterCatServer(s *grpc.Server, srv CatServer) {
 	s.RegisterService(&_Cat_serviceDesc, srv)
 }
 
-func _Cat_FindMyCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Cat_FindCuteCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FindCuteCatMessage)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatServer).FindMyCat(ctx, in)
+		return srv.(CatServer).FindCuteCat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/Cat/FindMyCat",
+		FullMethod: "/Cat/FindCuteCat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatServer).FindMyCat(ctx, req.(*FindCuteCatMessage))
+		return srv.(CatServer).FindCuteCat(ctx, req.(*FindCuteCatMessage))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -203,8 +203,8 @@ var _Cat_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*CatServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "FindMyCat",
-			Handler:    _Cat_FindMyCat_Handler,
+			MethodName: "FindCuteCat",
+			Handler:    _Cat_FindCuteCat_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
