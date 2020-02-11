@@ -19,3 +19,7 @@ golang-grpc-server
 
 # IDEA Setting Files
 .idea
+
+# env Files
+.env
+.envrc
