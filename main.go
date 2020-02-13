@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
-	"github.com/keitakn/golang-grpc-server/application"
 	"github.com/keitakn/golang-grpc-server/infrastructure"
 	pb "github.com/keitakn/golang-grpc-server/pb"
 	"google.golang.org/grpc"
@@ -21,8 +20,8 @@ func main() {
 
 	server := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			grpc_auth.UnaryServerInterceptor(application.Authentication),
-			application.AuthorizationUnaryServerInterceptor(),
+			grpc_auth.UnaryServerInterceptor(infrastructure.Authentication),
+			infrastructure.AuthorizationUnaryServerInterceptor(),
 		)),
 	)
 
