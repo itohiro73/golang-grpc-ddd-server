@@ -54,6 +54,14 @@ localhost:9998 Cat.FindCuteCat
 
 認証パラメータに渡す `CatSecret9999` は文字列であれば何でも良いですが、何か文字列を渡さないと認証エラーになります。
 
+GUI製だと [BloomRPC](https://github.com/uw-labs/bloomrpc) が便利です。
+
+こちらも `brew cask install bloomrpc` で手軽にインストールが可能です。
+
+左上のプラスボタンから `pb/cat.proto` をロードする事が可能です。
+
+<img width="1318" alt="BloomRPC" src="https://user-images.githubusercontent.com/11032365/74407093-9028fe80-4e74-11ea-9112-2371364140d7.png">
+
 ## `.proto` からGoのインターフェースを作成する
 
 例えば `pb/dog.proto` を以下の内容で作成します。
