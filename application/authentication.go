@@ -11,7 +11,7 @@ import (
 const AuthTokenKey = "auth-token"
 
 func Authentication(ctx context.Context) (context.Context, error) {
-	token, err := grpc_auth.AuthFromMD(ctx, "bearer")
+	token, err := grpc_auth.AuthFromMD(ctx, "Bearer")
 
 	if err != nil {
 		log.Fatal(err)
