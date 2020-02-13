@@ -16,9 +16,10 @@ func Authentication(ctx context.Context) (context.Context, error) {
 	if err != nil {
 		log.Fatal(err)
 
+		// TODO この条件分岐に入った時にgRPCサーバーが停止するので改善する
 		return nil, status.Errorf(
 			codes.Unauthenticated,
-			"could not read auth token: %v",
+			"could not parsed auth token: %v",
 			err,
 		)
 	}
