@@ -31,31 +31,28 @@ https://qiita.com/keitakn/items/f46347f871083356149b
 
 ## 動作確認
 
-[gRPC command line tool](https://github.com/grpc/grpc/blob/master/doc/command_line_tool.md) を利用するのが簡単です。
+[grpcurl](https://github.com/fullstorydev/grpcurl) を利用するのが簡単です。
 
 Macなら以下の手順でインストール可能です。
 
 ```
-brew install gflags
-
-brew tap grpc/grpc
-
-brew install grpc
+brew install grpcurl
 ```
 
-`which grpc_cli` を実行して `/usr/local/bin/grpc_cli` 等が表示されればインストール出来ています。
+`which grpcurl` を実行して `/usr/local/bin/grpcurl` 等が表示されればインストール出来ています。
 
-`grpc_cli ls localhost:9998` を実行するとgRPCサーバーの情報が取得出来ます。
-
-次のようにメソッドを指定するとそのインターフェースを確認出来ます。
-
-`grpc_cli ls localhost:9998 Cat.FindCuteCat -l`
+`grpcurl -plaintext localhost:9998 list` を実行するとgRPCサーバーの情報が取得出来ます。
 
 以下のようにメソッド名とパラメータを渡してあげればgRPCのメソッドを実行出来ます。
 
 ```
-grpc_cli call localhost:9998 Cat.FindCuteCat 'catId: "moko"'
+grpcurl -plaintext \
+-H 'authorization: Bearer CatSecret9999' \
+-d '{"catId":"moko"}' \
+localhost:9998 Cat.FindCuteCat
 ```
+
+認証パラメータに渡す `CatSecret9999` は文字列であれば何でも良いですが、何か文字列を渡さないと認証エラーになります。
 
 ## `.proto` からGoのインターフェースを作成する
 
