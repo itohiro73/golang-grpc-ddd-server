@@ -5,7 +5,6 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"log"
 )
 
 const AuthTokenKey = "auth-token"
@@ -14,12 +13,9 @@ func Authentication(ctx context.Context) (context.Context, error) {
 	token, err := grpc_auth.AuthFromMD(ctx, "Bearer")
 
 	if err != nil {
-		log.Fatal(err)
-
-		// TODO この条件分岐に入った時にgRPCサーバーが停止するので改善する
 		return nil, status.Errorf(
 			codes.Unauthenticated,
-			"could not parsed auth token: %v",
+			"could not read auth token: %v",
 			err,
 		)
 	}
