@@ -5,7 +5,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"log"
 )
 
 var catMethodList = map[string][]string{
@@ -61,8 +60,6 @@ func canAccessToMethod(method string, user *User) bool {
 	for _, p := range user.permissions {
 		permissions[p] = true
 	}
-
-	log.Println(user.permissions)
 
 	for _, p := range r {
 		if !permissions[p] {
