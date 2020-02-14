@@ -15,7 +15,7 @@ func Authentication(ctx context.Context) (context.Context, error) {
 	if err != nil {
 		return nil, status.Errorf(
 			codes.Unauthenticated,
-			"could not parsed auth token: %v",
+			"could not read auth token: %v",
 			err,
 		)
 	}
