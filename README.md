@@ -47,12 +47,31 @@ brew install grpcurl
 
 ```
 grpcurl -plaintext \
--H 'authorization: Bearer CatSecret9999' \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE' \
 -d '{"catId":"moko"}' \
 localhost:9998 Cat.FindCuteCat
 ```
 
-認証パラメータに渡す `CatSecret9999` は文字列であれば何でも良いですが、何か文字列を渡さないと認証エラーになります。
+認証パラメータに渡す `authorization: Bearer` は有効なJWTである必要があります。
+
+https://jwt.io/ でJWTを作成します。
+
+payloadの中身ですが `{ sub: "1" }` のようにユーザーIDをセットします。
+
+参考までに以下のJWTを記載しておきます。
+
+```
+# { "sub": "1" }
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE
+
+# { "sub": "2" }
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIn0.a7ktMGTybA32ykWHRvhp8FTEsBb-g3FN8aBB6FbgBo0
+
+# { "sub": "3" }
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIn0.FYQ95U6iKXxxRIAydKNuDmxsQybrIQh-lXs6Cqs_97M
+```
+
+正常に認可されるのは `{ "sub": "1" }` のみで、それ以外はgRPCサーバーがエラーを返します。
 
 GUI製だと [BloomRPC](https://github.com/uw-labs/bloomrpc) が便利です。
 
@@ -60,7 +79,26 @@ GUI製だと [BloomRPC](https://github.com/uw-labs/bloomrpc) が便利です。
 
 左上のプラスボタンから `pb/cat.proto` をロードする事が可能です。
 
-<img width="1318" alt="BloomRPC" src="https://user-images.githubusercontent.com/11032365/74407093-9028fe80-4e74-11ea-9112-2371364140d7.png">
+![BloomRPC](https://user-images.githubusercontent.com/11032365/74523153-ea52be00-4f5f-11ea-94b7-944c6241dd7d.png)
+
+METADATAの部分にはauthorizationトークンをJSONで指定します。
+
+```
+# ユーザーID 1 これしか正常に認可が通らない
+{
+  "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE"
+}
+
+# ユーザーID 2
+{
+  "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIn0.a7ktMGTybA32ykWHRvhp8FTEsBb-g3FN8aBB6FbgBo0"
+}
+
+# ユーザーID 3
+{
+  "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIn0.FYQ95U6iKXxxRIAydKNuDmxsQybrIQh-lXs6Cqs_97M"
+}
+```
 
 ## `.proto` からGoのインターフェースを作成する
 
