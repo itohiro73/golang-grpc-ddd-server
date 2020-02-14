@@ -8,6 +8,26 @@ import (
 	"log"
 )
 
+var catMethodList = map[string][]string{
+	"/Cat/FindCuteCat": {"FindCuteCat"},
+}
+
+type User struct {
+	permissions []string
+}
+
+// 本来はDB等からユーザーを検索する想定
+func findUser(id string) *User {
+	// 本番ではDBから取得する。
+	switch id {
+	case "1":
+		return &User{permissions: []string{"FindCuteCat"}}
+	case "2":
+		return &User{permissions: []string{"CreateCat"}}
+	}
+	return &User{}
+}
+
 func AuthorizationUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 	return func(
 		ctx context.Context,
@@ -18,10 +38,10 @@ func AuthorizationUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 		token, ok := GetAuthToken(ctx)
 		if ok == true {
 			// 認可処理としてはかなり雑だがサンプルなのでこれでいく
-			// 本来は info.FullMethod の値などを見て、対象のリクエストを許可して良いか判断する事になる
-			log.Print(token)
-			log.Println(info.FullMethod)
-			return handler(ctx, req)
+			user := findUser(token.Subject)
+			if canAccessToMethod(info.FullMethod, user) {
+				return handler(ctx, req)
+			}
 		}
 
 		return nil, status.Error(
@@ -29,4 +49,26 @@ func AuthorizationUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 			"could not access to specified method",
 		)
 	}
+}
+
+func canAccessToMethod(method string, user *User) bool {
+	r, ok := catMethodList[method]
+	if !ok {
+		return false
+	}
+
+	permissions := map[string]bool{}
+	for _, p := range user.permissions {
+		permissions[p] = true
+	}
+
+	log.Println(user.permissions)
+
+	for _, p := range r {
+		if !permissions[p] {
+			return false
+		}
+	}
+
+	return true
 }
