@@ -59,9 +59,9 @@ func AccessLogUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 
 		ctxzap.AddFields(
 			ctx,
-			zap.String("access.clientIp", clientIP),
-			zap.String("access.useragent", ua),
-			zap.String("access.authToken", authToken),
+			zap.String("access.ClientIp", clientIP),
+			zap.String("access.Useragent", ua),
+			zap.String("access.AuthToken", authToken),
 		)
 
 		return handler(ctx, req)
