@@ -53,13 +53,13 @@ func AccessLogUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 			}
 
 			if token, ok := md["authorization"]; ok {
-				authToken = token[0]
+				authToken = strings.Join(token, ",")
 			}
 		}
 
 		ctxzap.AddFields(
 			ctx,
-			zap.String("access.clientip", clientIP),
+			zap.String("access.clientIp", clientIP),
 			zap.String("access.useragent", ua),
 			zap.String("access.authToken", authToken),
 		)
