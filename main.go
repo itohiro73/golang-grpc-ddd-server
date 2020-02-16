@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
+	grpczap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	"github.com/keitakn/golang-grpc-server/infrastructure"
 	pb "github.com/keitakn/golang-grpc-server/pb"
 	"google.golang.org/grpc"
@@ -18,8 +19,12 @@ func main() {
 		log.Fatalf("failed to listen port: %v", err)
 	}
 
+	zapLogger := infrastructure.CreateLogger()
+
 	server := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			grpczap.UnaryServerInterceptor(zapLogger),
+			infrastructure.AccessLogUnaryServerInterceptor(),
 			grpc_auth.UnaryServerInterceptor(infrastructure.Authentication),
 			infrastructure.AuthorizationUnaryServerInterceptor(),
 		)),
