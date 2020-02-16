@@ -24,6 +24,7 @@ func main() {
 	server := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpczap.UnaryServerInterceptor(zapLogger),
+			infrastructure.AccessLogUnaryServerInterceptor(),
 			grpc_auth.UnaryServerInterceptor(infrastructure.Authentication),
 			infrastructure.AuthorizationUnaryServerInterceptor(),
 		)),
