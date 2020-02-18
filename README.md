@@ -100,6 +100,17 @@ METADATAの部分にはauthorizationトークンをJSONで指定します。
 }
 ```
 
+### ヘルスチェックメソッドの動作確認
+
+`authorization: Bearer` の設定は必要ありません。
+
+以下で呼び出しが可能です。
+
+```bazaar
+grpcurl -plaintext \
+localhost:9998 grpc.health.v1.Health/Check
+```
+
 ## `.proto` からGoのインターフェースを作成する
 
 例えば `pb/dog.proto` を以下の内容で作成します。
