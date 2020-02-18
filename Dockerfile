@@ -28,7 +28,7 @@ WORKDIR /go/app
 COPY . .
 
 RUN set -eux && \
-  go build -o golang-grpc-server && \
+  go build -o golang-grpc-server ./cmd/grpc/main.go && \
   go get gopkg.in/urfave/cli.v2@master && \
   go get github.com/oxequa/realize && \
   go get -u github.com/go-delve/delve/cmd/dlv && \
