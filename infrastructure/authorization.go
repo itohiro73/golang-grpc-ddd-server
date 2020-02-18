@@ -34,6 +34,11 @@ func AuthorizationUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 		info *grpc.UnaryServerInfo,
 		handler grpc.UnaryHandler,
 	) (interface{}, error) {
+		// ヘルスチェックの場合は無条件で認可する
+		if info.FullMethod == "/grpc.health.v1.Health/Check" {
+			return handler(ctx, req)
+		}
+
 		token, ok := GetAuthToken(ctx)
 		if ok == true {
 			// 認可処理としてはかなり雑だがサンプルなのでこれでいく
