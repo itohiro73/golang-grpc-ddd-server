@@ -100,6 +100,17 @@ METADATAの部分にはauthorizationトークンをJSONで指定します。
 }
 ```
 
+### ヘルスチェックメソッドの動作確認
+
+`authorization: Bearer` の設定は必要ありません。
+
+以下で呼び出しが可能です。
+
+```bazaar
+grpcurl -plaintext \
+localhost:9998 grpc.health.v1.Health/Check
+```
+
 ## `.proto` からGoのインターフェースを作成する
 
 例えば `pb/dog.proto` を以下の内容で作成します。
@@ -133,6 +144,60 @@ protoc --go_out=plugins=grpc:. pb/dog.proto
 出力された `pb/dog.pb.go` のインターフェースを満たすようにgRPCサーバーを実装します。
 
 gRPCサービスやメソッドを増やす際は必ず上記の手順を行います。
+
+### healthCheck用のgRPCサービス
+
+`pb/health.proto` のような `.proto` 内で `import` を利用している場合は以下のように `.proto` ファイルのBuild時に `import` されたライブラリのパスを指定する必要があります。
+
+```
+cd /go/app/
+protoc -I/usr/local/include -I. \
+  -I$GOPATH/src \
+  -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+  --go_out=plugins=grpc:. \
+  pb/health.proto
+```
+
+## grpc-gatewayの生成
+
+[grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway) を使ってREST APIでgRPCメソッドを呼び出せるサーバーを立ち上げます。
+
+以下を実行すると `google.golang.org/grpc/health/grpc_health_v1/health.pb.gw.go` が更新されます。
+
+`pb/health.proto` を変更したら必ずこの手順を行って下さい。
+
+```
+cd /go/app/
+protoc -I/usr/local/include -I. \
+  -I$GOPATH/src \
+  -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+  --grpc-gateway_out=logtostderr=true:. \
+  pb/health.proto
+```
+
+普通にHTTPサーバーなので以下のコマンドで動作確認が可能です。
+
+```
+curl -v http://localhost:8081/grpc/health
+
+# 結果
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8081 (#0)
+> GET /grpc/health HTTP/1.1
+> Host: localhost:8081
+> User-Agent: curl/7.64.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Grpc-Metadata-Content-Type: application/grpc
+< Date: Tue, 18 Feb 2020 07:12:21 GMT
+< Content-Length: 20
+<
+* Connection #0 to host localhost left intact
+{"status":"SERVING"}* Closing connection 0
+```
 
 ## gRPCドキュメントの自動生成
 

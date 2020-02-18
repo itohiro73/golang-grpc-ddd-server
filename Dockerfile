@@ -19,7 +19,9 @@ RUN set -eux && \
   make -j 3 && \
   make install && \
   go get -u github.com/golang/protobuf/protoc-gen-go && \
-  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc
+  go get -u github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc && \
+  go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway && \
+  go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 
 WORKDIR /go/app
 

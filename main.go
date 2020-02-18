@@ -4,6 +4,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	grpczap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	health "github.com/keitakn/golang-grpc-server/google.golang.org/grpc/health/grpc_health_v1"
 	"github.com/keitakn/golang-grpc-server/infrastructure"
 	pb "github.com/keitakn/golang-grpc-server/pb"
 	"google.golang.org/grpc"
@@ -34,6 +35,10 @@ func main() {
 
 	// 実行したい実処理をseverに登録する
 	pb.RegisterCatServer(server, catService)
+
+	// ヘルスチェック用のメソッド
+	healthCheckService := &infrastructure.SkipAuthHealthServer{}
+	health.RegisterHealthServer(server, healthCheckService)
 
 	// gRPCサーバのサービスの内容を公開
 	reflection.Register(server)
