@@ -134,6 +134,19 @@ protoc --go_out=plugins=grpc:. pb/dog.proto
 
 gRPCサービスやメソッドを増やす際は必ず上記の手順を行います。
 
+### healthCheck用のgRPCサービス
+
+`pb/health.proto` のような `.proto` 内で `import` を利用している場合は以下のように `.proto` ファイルのBuild時に `import` されたライブラリのパスを指定する必要があります。
+
+```
+cd /go/app/
+protoc -I/usr/local/include -I. \
+  -I$GOPATH/src \
+  -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+  --go_out=plugins=grpc:. \
+  pb/health.proto
+```
+
 ## gRPCドキュメントの自動生成
 
 プロジェクトルートで以下を実行するとHTML形式のドキュメントを生成します。
