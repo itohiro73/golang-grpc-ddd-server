@@ -211,3 +211,23 @@ protoc --doc_out=html,index.html:./docs api/proto/cat.proto
 ```
 
 `docs/index.html` が自動生成されたファイルになります。
+
+## ディレクトリ構成
+
+下記のようなディレクトリ構成になっています。
+
+[Standard Go Project Layout](https://github.com/golang-standards/project-layout) を参考にしてあります。
+
+```
+golang-grpc-server/
+  ├ api/
+  │  └ proto/           # gRPCのインターフェース定義となるProtocol Bufferのファイル置き場
+  ├ build/
+  │  └ package/
+  │    └ docker/        # Dockerfileの置き場
+  ├ docs/
+  ├ google.golang.org/  # Googleが公開しているpackage
+  ├ internal/           # 本アプリケーションでのみ利用するpackage
+  ├ pkg/                # 他プロジェクトに公開するpackage、ここではgRPCのGoのインターフェース
+  ├ scripts             # デプロイ等に利用するシェルスクリプト
+```
