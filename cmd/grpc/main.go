@@ -5,7 +5,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	grpczap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	health "github.com/keitakn/golang-grpc-server/google.golang.org/grpc/health/grpc_health_v1"
-	"github.com/keitakn/golang-grpc-server/infrastructure"
+	"github.com/keitakn/golang-grpc-server/internal/infrastructure"
 	"github.com/keitakn/golang-grpc-server/pkg/pb/cat"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
