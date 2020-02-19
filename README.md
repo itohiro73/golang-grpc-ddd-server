@@ -10,13 +10,13 @@ Docker for Mac等をインストールして下さい。
 ### 起動スクリプト1（ホットリロードが有効）
 
 ```
-docker-compose-up.sh
+./scripts/docker-compose-up.sh
 ```
 
 ### 起動スクリプト2（ホットリロード、リモートデバッグが有効）
 
 ```
-docker-compose-up-debug.sh
+./scripts/docker-compose-up-debug.sh
 ```
 
 デバッグの方法等は筆者が以前書いた下記の記事を参考にして下さい。
@@ -113,7 +113,7 @@ localhost:9998 grpc.health.v1.Health/Check
 
 ## `.proto` からGoのインターフェースを作成する
 
-例えば `pb/dog.proto` を以下の内容で作成します。
+例えば `api/proto/dog.proto` を以下の内容で作成します。
 
 ```
 syntax = "proto3";
@@ -136,18 +136,20 @@ message CuteDogResponse {
 
 ```
 cd /go/app/
-protoc --go_out=plugins=grpc:. pb/dog.proto
+protoc --go_out=plugins=grpc:. api/proto/dog.proto
 ```
 
-そうすると `pb/dog.pb.go` が出力されます。
+そうすると `api/proto/dog.pb.go` が出力されます。
 
-出力された `pb/dog.pb.go` のインターフェースを満たすようにgRPCサーバーを実装します。
+出力された `api/proto/dog.pb.go` のインターフェースを満たすようにgRPCサーバーを実装します。
+
+なお出力された `pb.go` は他プロジェクトでも利用する可能性があるので `pkg/pb/` に移動して下さい。
 
 gRPCサービスやメソッドを増やす際は必ず上記の手順を行います。
 
 ### healthCheck用のgRPCサービス
 
-`pb/health.proto` のような `.proto` 内で `import` を利用している場合は以下のように `.proto` ファイルのBuild時に `import` されたライブラリのパスを指定する必要があります。
+`api/proto/health.proto` のような `.proto` 内で `import` を利用している場合は以下のように `.proto` ファイルのBuild時に `import` されたライブラリのパスを指定する必要があります。
 
 ```
 cd /go/app/
@@ -155,16 +157,16 @@ protoc -I/usr/local/include -I. \
   -I$GOPATH/src \
   -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
   --go_out=plugins=grpc:. \
-  pb/health.proto
+  api/proto/health.proto
 ```
 
 ## grpc-gatewayの生成
 
 [grpc-gateway](https://github.com/grpc-ecosystem/grpc-gateway) を使ってREST APIでgRPCメソッドを呼び出せるサーバーを立ち上げます。
 
-以下を実行すると `google.golang.org/grpc/health/grpc_health_v1/health.pb.gw.go` が更新されます。
+以下を実行すると `google.golang.org/grpc/health/grpc_health_v1/health.pb.go` が更新されます。
 
-`pb/health.proto` を変更したら必ずこの手順を行って下さい。
+`api/proto/health.proto` を変更したら必ずこの手順を行って下さい。
 
 ```
 cd /go/app/
@@ -172,7 +174,7 @@ protoc -I/usr/local/include -I. \
   -I$GOPATH/src \
   -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
   --grpc-gateway_out=logtostderr=true:. \
-  pb/health.proto
+  api/proto/health.proto
 ```
 
 普通にHTTPサーバーなので以下のコマンドで動作確認が可能です。
@@ -205,7 +207,27 @@ curl -v http://localhost:8081/grpc/health
 
 ```
 cd /go/app/
-protoc --doc_out=html,index.html:./docs pb/*.proto
+protoc --doc_out=html,index.html:./docs api/proto/cat.proto
 ```
 
 `docs/index.html` が自動生成されたファイルになります。
+
+## ディレクトリ構成
+
+下記のようなディレクトリ構成になっています。
+
+[Standard Go Project Layout](https://github.com/golang-standards/project-layout) を参考にしてあります。
+
+```
+golang-grpc-server/
+  ├ api/
+  │  └ proto/           # gRPCのインターフェース定義となるProtocol Bufferのファイル置き場
+  ├ build/
+  │  └ package/
+  │    └ docker/        # Dockerfileの置き場
+  ├ docs/
+  ├ google.golang.org/  # Googleが公開しているpackage
+  ├ internal/           # 本アプリケーションでのみ利用するpackage
+  ├ pkg/                # 他プロジェクトに公開するpackage、ここではgRPCのGoのインターフェース
+  ├ scripts             # デプロイ等に利用するシェルスクリプト
+```

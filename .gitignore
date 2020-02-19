@@ -16,6 +16,7 @@
 
 # output go build
 golang-grpc-server
+grpc-gateway
 
 # IDEA Setting Files
 .idea

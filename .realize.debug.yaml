@@ -8,7 +8,7 @@ schema:
     commands:
       install:
         status: true
-        method: go build -o golang-grpc-server
+        method: go build -o golang-grpc-server ./cmd/grpc/main.go
       run:
         status: true
         method: /go/bin/dlv

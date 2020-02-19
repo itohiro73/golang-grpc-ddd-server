@@ -3,22 +3,22 @@ package infrastructure
 import (
 	"context"
 	"errors"
-	pb "github.com/keitakn/golang-grpc-server/pb"
+	"github.com/keitakn/golang-grpc-server/pkg/pb/cat"
 )
 
 type CatService struct{}
 
-func (s *CatService) FindCuteCat(ctx context.Context, message *pb.FindCuteCatMessage) (*pb.CuteCatResponse, error) {
+func (s *CatService) FindCuteCat(ctx context.Context, message *cat.FindCuteCatMessage) (*cat.CuteCatResponse, error) {
 	switch message.CatId {
 	case "moko":
 		// もこはチンチラシルバー
-		return &pb.CuteCatResponse{
+		return &cat.CuteCatResponse{
 			Name: "Moko",
 			Kind: "Chinchilla silver",
 		}, nil
 	case "mop":
 		// もっぷはマンチカン
-		return &pb.CuteCatResponse{
+		return &cat.CuteCatResponse{
 			Name: "Mop",
 			Kind: "Munchkin",
 		}, nil
