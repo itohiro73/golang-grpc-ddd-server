@@ -10,13 +10,13 @@ Docker for Mac等をインストールして下さい。
 ### 起動スクリプト1（ホットリロードが有効）
 
 ```
-docker-compose-up.sh
+./scripts/docker-compose-up.sh
 ```
 
 ### 起動スクリプト2（ホットリロード、リモートデバッグが有効）
 
 ```
-docker-compose-up-debug.sh
+./scripts/docker-compose-up-debug.sh
 ```
 
 デバッグの方法等は筆者が以前書いた下記の記事を参考にして下さい。
