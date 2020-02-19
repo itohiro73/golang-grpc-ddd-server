@@ -19,11 +19,18 @@ fi
 deployStage="$1"
 imageTag="$2"
 
-repositoryUri="${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${deployStage}-golang-grpc-server"
+grpcRepositoryUri="${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${deployStage}-golang-grpc-server"
 
 $(aws ecr get-login --no-include-email --region ap-northeast-1 --profile nekochans-dev)
 
-docker build --no-cache --rm -t "${repositoryUri}" .
-docker tag "${repositoryUri}":latest "${repositoryUri}":"${imageTag}"
-docker push "${repositoryUri}":latest
-docker push "${repositoryUri}":"${imageTag}"
+docker build --no-cache --rm -t "${grpcRepositoryUri}" .
+docker tag "${grpcRepositoryUri}":latest "${grpcRepositoryUri}":"${imageTag}"
+docker push "${grpcRepositoryUri}":latest
+docker push "${grpcRepositoryUri}":"${imageTag}"
+
+gatewayRepositoryUri="${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/${deployStage}-golang-grpc-gateway"
+
+docker build --no-cache --rm -t "${gatewayRepositoryUri}" .
+docker tag "${gatewayRepositoryUri}":latest "${gatewayRepositoryUri}":"${imageTag}"
+docker push "${gatewayRepositoryUri}":latest
+docker push "${gatewayRepositoryUri}":"${imageTag}"
