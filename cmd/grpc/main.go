@@ -6,7 +6,7 @@ import (
 	grpczap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	health "github.com/keitakn/golang-grpc-server/google.golang.org/grpc/health/grpc_health_v1"
 	"github.com/keitakn/golang-grpc-server/infrastructure"
-	pb "github.com/keitakn/golang-grpc-server/pb"
+	"github.com/keitakn/golang-grpc-server/pkg/pb/cat"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -34,7 +34,7 @@ func main() {
 	catService := &infrastructure.CatService{}
 
 	// 実行したい実処理をseverに登録する
-	pb.RegisterCatServer(server, catService)
+	cat.RegisterCatServer(server, catService)
 
 	// ヘルスチェック用のメソッド
 	healthCheckService := &infrastructure.SkipAuthHealthServer{}
