@@ -18,6 +18,18 @@ services:
       - SYS_PTRACE
     networks:
       - grpc-training
+  grpc-gateway:
+    build:
+      context: .
+      dockerfile: build/package/docker/gateway/Dockerfile
+      target: build
+    command: go run ./cmd/gateway/main.go
+    environment:
+      DEPLOY_STAGE: local
+    ports:
+      - 8081:8081
+    networks:
+      - grpc-training
 networks:
   grpc-training:
     name: grpc-training
