@@ -140,7 +140,9 @@ func init() {
 	proto.RegisterType((*HealthCheckResponse)(nil), "grpc.health.v1.HealthCheckResponse")
 }
 
-func init() { proto.RegisterFile("api/proto/health.proto", fileDescriptor_05d09cb6e28616a4) }
+func init() {
+	proto.RegisterFile("api/proto/health.proto", fileDescriptor_05d09cb6e28616a4)
+}
 
 var fileDescriptor_05d09cb6e28616a4 = []byte{
 	// 332 bytes of a gzipped FileDescriptorProto
