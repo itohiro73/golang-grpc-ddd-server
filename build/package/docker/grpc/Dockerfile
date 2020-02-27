@@ -1,8 +1,8 @@
-FROM golang:1.13-alpine3.11 as build
+FROM golang:1.14-alpine3.11 as build
 
 WORKDIR /tmp
 
-ENV PROTOBUF_VERSION 3.11.2
+ENV PROTOBUF_VERSION 3.11.4
 ENV PROTOBUF_URL https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOBUF_VERSION/protobuf-cpp-$PROTOBUF_VERSION.tar.gz
 
 RUN set -eux && \
