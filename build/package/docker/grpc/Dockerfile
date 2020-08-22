@@ -9,7 +9,11 @@ RUN set -eux && \
   apk update && \
   apk add --no-cache git curl build-base autoconf automake libtool && \
   curl -L -o /tmp/protobuf.tar.gz $PROTOBUF_URL && \
-  tar xvzf protobuf.tar.gz
+  tar xvzf protobuf.tar.gz && \
+  go get -u github.com/cosmtrek/air && \
+  go build -o /go/bin/air github.com/cosmtrek/air && \
+  go get -u github.com/go-delve/delve/cmd/dlv && \
+  go build -o /go/bin/dlv github.com/go-delve/delve/cmd/dlv
 
 WORKDIR /tmp/protobuf-$PROTOBUF_VERSION
 
@@ -28,11 +32,7 @@ WORKDIR /go/app
 COPY . .
 
 RUN set -eux && \
-  go build -o golang-grpc-server ./cmd/grpc/main.go && \
-  go get gopkg.in/urfave/cli.v2@master && \
-  go get github.com/oxequa/realize && \
-  go get -u github.com/go-delve/delve/cmd/dlv && \
-  go build -o /go/bin/dlv github.com/go-delve/delve/cmd/dlv
+  go build -o golang-grpc-server ./cmd/grpc/main.go
 
 FROM alpine:3.11
 

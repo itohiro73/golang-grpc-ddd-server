@@ -11,8 +11,8 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# realize Setting Files
-.realize.yaml
+# Air(Live reload for Go apps) Setting Files
+.air.conf
 
 # output go build
 golang-grpc-server
