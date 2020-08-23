@@ -27,3 +27,6 @@ grpc-gateway
 
 # goenv Setting File
 .go-version
+
+# sqlite test db
+test.db

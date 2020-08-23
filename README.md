@@ -52,6 +52,37 @@ grpcurl -plaintext \
 localhost:9998 Cat.FindCuteCat
 ```
 
+レイヤードアーキテクチャーでCRUDを実装しているDogのgRPCメソッドは下記のように実行できます。
+
+```
+grpcurl -plaintext \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE' \
+-d '{"id":1, "name":"Chiro", "kind":"Shiba-ken"}' \
+localhost:9998 Dog.AddCuteDog
+```
+
+```
+grpcurl -plaintext \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE' \
+-d '{"id":1}' \
+localhost:9998 Dog.FindCuteDog
+
+```
+
+```
+grpcurl -plaintext \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE' \
+-d '{"id":1, "name":"チロ", "kind":"柴犬"}' \
+localhost:9998 Dog.UpdateCuteDog
+```
+
+```
+grpcurl -plaintext \
+-H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIn0.rTCH8cLoGxAm_xw68z-zXVKi9ie6xJn9tnVWjd_9ftE' \
+-d '{"id":1}' \
+localhost:9998 Dog.DeleteCuteDog
+```
+
 認証パラメータに渡す `authorization: Bearer` は有効なJWTである必要があります。
 
 https://jwt.io/ でJWTを作成します。

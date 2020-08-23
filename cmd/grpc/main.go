@@ -6,7 +6,13 @@ import (
 	grpczap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	health "github.com/keitakn/golang-grpc-server/google.golang.org/grpc/health/grpc_health_v1"
 	"github.com/keitakn/golang-grpc-server/internal/infrastructure"
+	"github.com/keitakn/golang-grpc-server/internal/infrastructure/persistence"
+	"github.com/keitakn/golang-grpc-server/internal/interfaces/grpc/handler"
+	"github.com/keitakn/golang-grpc-server/internal/usecase"
 	"github.com/keitakn/golang-grpc-server/pkg/pb/cat"
+	"github.com/keitakn/golang-grpc-server/pkg/pb/dog"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
@@ -33,8 +39,17 @@ func main() {
 
 	catService := &infrastructure.CatService{}
 
+	db, err := gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("failed to connect database")
+	}
+	defer db.Close()
+	dogPersistence := persistence.NewDogPersistence(db)
+	dogUseCase := usecase.NewDogUseCase(dogPersistence)
+	dogHandler := handler.NewDogHandler(dogUseCase)
 	// 実行したい実処理をseverに登録する
 	cat.RegisterCatServer(server, catService)
+	dog.RegisterDogServer(server, dogHandler)
 
 	// ヘルスチェック用のメソッド
 	healthCheckService := &infrastructure.SkipAuthHealthServer{}

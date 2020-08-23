@@ -7,8 +7,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-var catMethodList = map[string][]string{
+var grpcMethodList = map[string][]string{
 	"/Cat/FindCuteCat": {"FindCuteCat"},
+	"/Dog/AddCuteDog": {"AddCuteDog"},
+	"/Dog/FindCuteDog": {"FindCuteDog"},
+	"/Dog/UpdateCuteDog": {"UpdateCuteDog"},
+	"/Dog/DeleteCuteDog": {"DeleteCuteDog"},
 }
 
 type User struct {
@@ -20,7 +24,7 @@ func findUser(id string) *User {
 	// 本番ではDBから取得する。
 	switch id {
 	case "1":
-		return &User{permissions: []string{"FindCuteCat"}}
+		return &User{permissions: []string{"FindCuteCat", "AddCuteDog", "FindCuteDog", "UpdateCuteDog", "DeleteCuteDog"}}
 	case "2":
 		return &User{permissions: []string{"CreateCat"}}
 	}
@@ -56,7 +60,7 @@ func AuthorizationUnaryServerInterceptor() grpc.UnaryServerInterceptor {
 }
 
 func canAccessToMethod(method string, user *User) bool {
-	r, ok := catMethodList[method]
+	r, ok := grpcMethodList[method]
 	if !ok {
 		return false
 	}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+service Dog {
+  rpc AddCuteDog (CuteDog) returns (CuteDogID) {}
+  rpc FindCuteDog (CuteDogID) returns (CuteDog) {}
+  rpc UpdateCuteDog (CuteDog) returns (CuteDog) {}
+  rpc DeleteCuteDog (CuteDogID) returns (CuteDogID) {}
+}
+
+message CuteDogID {
+  int64 id = 1;
+}
+
+message CuteDog {
+  int64 id = 1;
+  string name = 2;
+  string kind = 3;
+}
