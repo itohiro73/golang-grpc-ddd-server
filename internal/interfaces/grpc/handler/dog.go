@@ -3,13 +3,13 @@ package handler
 import (
 	"context"
 	"errors"
-	"github.com/keitakn/golang-grpc-server/internal/domain/model"
-	"github.com/keitakn/golang-grpc-server/internal/usecase"
-	"github.com/keitakn/golang-grpc-server/pkg/pb/dog"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/domain/model"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/usecase"
+	"github.com/itohiro73/golang-grpc-ddd-server/pkg/pb/dog"
 	"strconv"
 )
 
-type dogHandler struct{
+type dogHandler struct {
 	dogUseCase usecase.DogUseCase
 }
 

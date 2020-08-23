@@ -1,7 +1,7 @@
 package model
 
 type CuteDog struct {
-	Id DogID
+	Id   DogID
 	Name string
 	Kind string
 }

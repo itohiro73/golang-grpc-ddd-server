@@ -8,9 +8,9 @@ import (
 )
 
 var grpcMethodList = map[string][]string{
-	"/Cat/FindCuteCat": {"FindCuteCat"},
-	"/Dog/AddCuteDog": {"AddCuteDog"},
-	"/Dog/FindCuteDog": {"FindCuteDog"},
+	"/Cat/FindCuteCat":   {"FindCuteCat"},
+	"/Dog/AddCuteDog":    {"AddCuteDog"},
+	"/Dog/FindCuteDog":   {"FindCuteDog"},
 	"/Dog/UpdateCuteDog": {"UpdateCuteDog"},
 	"/Dog/DeleteCuteDog": {"DeleteCuteDog"},
 }

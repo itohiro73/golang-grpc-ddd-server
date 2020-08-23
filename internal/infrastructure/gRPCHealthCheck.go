@@ -3,7 +3,7 @@ package infrastructure
 import (
 	"context"
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
-	health "github.com/keitakn/golang-grpc-server/google.golang.org/grpc/health/grpc_health_v1"
+	health "github.com/itohiro73/golang-grpc-ddd-server/google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

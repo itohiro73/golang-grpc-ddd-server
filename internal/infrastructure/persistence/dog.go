@@ -2,13 +2,13 @@ package persistence
 
 import (
 	"context"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/domain/model"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/domain/repository"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/infrastructure/dto"
 	"github.com/jinzhu/gorm"
-	"github.com/keitakn/golang-grpc-server/internal/domain/model"
-	"github.com/keitakn/golang-grpc-server/internal/domain/repository"
-	"github.com/keitakn/golang-grpc-server/internal/infrastructure/dto"
 )
 
-type dogPersistence struct{
+type dogPersistence struct {
 	db *gorm.DB
 }
 

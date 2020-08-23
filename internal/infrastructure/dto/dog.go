@@ -1,8 +1,8 @@
 package dto
 
 import (
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/domain/model"
 	"github.com/jinzhu/gorm"
-	"github.com/keitakn/golang-grpc-server/internal/domain/model"
 )
 
 type Dog struct {
@@ -26,7 +26,7 @@ func UpdateCuteDog(target *Dog, source *model.CuteDog) *Dog {
 
 func AdaptDog(d *Dog) *model.CuteDog {
 	return &model.CuteDog{
-		Id: model.DogID(d.ID),
+		Id:   model.DogID(d.ID),
 		Name: d.Name,
 		Kind: d.Kind,
 	}

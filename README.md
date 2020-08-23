@@ -1,5 +1,5 @@
-# golang-grpc-server
-GoでgRPCを実装する時のサンプルコード
+# golang-grpc-ddd-server
+GoでgRPCサービスをDDDアーキテクチャーで実装する時のサンプルコード
 
 ## 起動
 

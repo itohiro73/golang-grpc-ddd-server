@@ -5,7 +5,7 @@ import (
 	"flag"
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	gw "github.com/keitakn/golang-grpc-server/google.golang.org/grpc/health/grpc_health_v1"
+	gw "github.com/itohiro73/golang-grpc-ddd-server/google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc"
 	"net/http"
 	"os"

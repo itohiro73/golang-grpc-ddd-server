@@ -1,4 +1,4 @@
-module github.com/keitakn/golang-grpc-server
+module github.com/itohiro73/golang-grpc-ddd-server
 
 go 1.14
 

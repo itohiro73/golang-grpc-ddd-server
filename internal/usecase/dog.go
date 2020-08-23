@@ -2,8 +2,8 @@ package usecase
 
 import (
 	"context"
-	"github.com/keitakn/golang-grpc-server/internal/domain/model"
-	"github.com/keitakn/golang-grpc-server/internal/domain/repository"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/domain/model"
+	"github.com/itohiro73/golang-grpc-ddd-server/internal/domain/repository"
 )
 
 type DogUseCase interface {

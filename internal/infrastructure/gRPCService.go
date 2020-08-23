@@ -3,7 +3,7 @@ package infrastructure
 import (
 	"context"
 	"errors"
-	"github.com/keitakn/golang-grpc-server/pkg/pb/cat"
+	"github.com/itohiro73/golang-grpc-ddd-server/pkg/pb/cat"
 )
 
 type CatService struct{}
